@@ -6,7 +6,7 @@
   "compatibility_flags": ["nodejs_compat"],
   "routes": [
     {
-      "pattern": "app.codra.devarshi.dev",
+      "pattern": "codra.iteractive.dev",
       "custom_domain": true,
     },
   ],
@@ -28,14 +28,13 @@
   "hyperdrive": [
     {
       "binding": "HYPERDRIVE",
-      "id": "35b282fa80f24e67adfda063c3a839d1",
+      "id": "c677cfc10d064834bf2689be2ab20d19",
     },
   ],
   "kv_namespaces": [
     {
       "binding": "APP_KV",
-      "id": "f5f88c23f1f14342b2ec2c733470921b",
-      "preview_id": "9f2cdc0fdf8d4c868ae2754f66b839b8",
+      "id": "59f856874a7c44899f0154711940f3b5",
     },
   ],
   "queues": {
@@ -92,16 +91,16 @@
       "GITHUB_CLIENT_ID",
       "GITHUB_CLIENT_SECRET",
       "LLM_CONFIG_ENCRYPTION_KEY",
-      "CF_API_TOKEN",
       "CF_ACCOUNT_ID",
     ],
   },
   "vars": {
-    "APP_URL": "https://app.codra.devarshi.dev",
-    "AUTH_CALLBACK_URL": "https://app.codra.devarshi.dev/auth/github/callback",
-    "BOT_USERNAME": "codra-app",
-    "GITHUB_APP_SLUG": "codra-app-personal",
-    "DASHBOARD_ALLOWED_USERS": "devarshishimpi",
+    "APP_URL": "https://codra.iteractive.dev",
+    "AUTH_CALLBACK_URL": "https://codra.iteractive.dev/auth/github/callback",
+    "BOT_USERNAME": "codra-iteractive",
+    "GITHUB_APP_SLUG": "codra-iteractive",
+    "DASHBOARD_ALLOWED_USERS": "bradhallett",
     "ENVIRONMENT": "production",
+    "TELEMETRY_DISABLED": "true",
   },
 }

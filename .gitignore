@@ -148,3 +148,4 @@ vite.config.ts.timestamp-*
 tsup.config.bundled_*.mjs
 *.tgz
 .npmrc
+.secrets/
