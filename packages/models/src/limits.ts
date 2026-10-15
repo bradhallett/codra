@@ -1,11 +1,12 @@
-export const MODEL_TIMEOUT_BASE_MS = 20_000;
+export const MODEL_TIMEOUT_BASE_MS = 60_000;
 const MODEL_TIMEOUT_PER_LINE_MS = 100;
 const MODEL_TIMEOUT_FREE_LINES = 100;
-// Ceiling stays under 120s exceededCpu limit, leaving room to fail over.
-export const MODEL_TIMEOUT_MAX_MS = 50_000;
+// Self-host: z.ai GLM runs reasoning by default (thinking is wanted for review
+// quality); single attempts measured at 30-60s on review-sized prompts.
+export const MODEL_TIMEOUT_MAX_MS = 90_000;
 
-// Slightly above MODEL_TIMEOUT_MAX_MS so a large diff can use the full ceiling before deferring.
-export const MODEL_FALLBACK_CHAIN_BUDGET_MS = 55_000;
+// Stays under the 120s exceededCpu limit, leaving failover room.
+export const MODEL_FALLBACK_CHAIN_BUDGET_MS = 110_000;
 
 export const MODEL_TIMEOUT_PER_1K_OUTPUT_MS = 1_200;
 
