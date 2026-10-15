@@ -35,6 +35,7 @@ export type ProviderPayload = {
   name: string;
   apiFormat: LlmApiFormat;
   baseUrl: string | null;
+  catalogBaseUrl: string | null;
   apiKey?: string;
   clearApiKey?: boolean;
   enabled: boolean;

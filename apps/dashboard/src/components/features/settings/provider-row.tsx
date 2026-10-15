@@ -55,6 +55,7 @@ export function ProviderRow({
   const canEnableProvider = providerHasCredential(provider);
   const providerNameId = domId("provider-name", provider.id);
   const providerBaseUrlId = domId("provider-base-url", provider.id);
+  const providerCatalogUrlId = domId("provider-catalog-url", provider.id);
   const providerApiKeyId = domId("provider-api-key", provider.id);
 
   return (
@@ -201,6 +202,25 @@ export function ProviderRow({
                       Must include your GCP project ID and region.
                     </p>
                   )}
+                </div>
+                <div>
+                  <FieldLabel htmlFor={providerCatalogUrlId}>
+                    Catalog Base URL
+                  </FieldLabel>
+                  <Input
+                    id={providerCatalogUrlId}
+                    placeholder="https://llm.example.com/v1"
+                    value={provider.catalogBaseUrl ?? ""}
+                    onChange={(e) =>
+                      updateProviderDraft(provider.id, {
+                        catalogBaseUrl: e.target.value || null,
+                      })
+                    }
+                  />
+                  <p className="mt-1.5 text-xs text-ui-subtle">
+                    Model-discovery endpoint, when it differs from the base
+                    URL. Use if the chat endpoint cannot serve its model list.
+                  </p>
                 </div>
               </>
             )}

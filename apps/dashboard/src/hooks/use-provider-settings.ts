@@ -30,6 +30,7 @@ const BLANK_NEW_PROVIDER: NewProviderDraft = {
   name: "Custom OpenAI",
   apiFormat: "openai",
   baseUrl: "",
+  catalogBaseUrl: "",
   apiKey: "",
   enabled: true,
 };
@@ -287,6 +288,7 @@ export function useProviderSettings({
         name: provider.name,
         apiFormat: provider.apiFormat,
         baseUrl: provider.baseUrl || null,
+        catalogBaseUrl: provider.catalogBaseUrl || null,
         enabled: provider.enabled,
       };
       if (clearApiKey) {
@@ -355,6 +357,7 @@ export function useProviderSettings({
         name: newProvider.name.trim(),
         apiFormat: newProvider.apiFormat,
         baseUrl: newProvider.baseUrl.trim() || null,
+        catalogBaseUrl: newProvider.catalogBaseUrl.trim() || null,
         apiKey: newProvider.apiKey.trim() || undefined,
         enabled: newProvider.enabled,
       });

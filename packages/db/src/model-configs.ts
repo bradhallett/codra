@@ -20,6 +20,7 @@ type ProviderRow = {
   name: string;
   api_format: LlmApiFormat;
   base_url: string | null;
+  catalog_base_url: string | null;
   encrypted_api_key: string | null;
   enabled: boolean;
   created_at: string;
@@ -41,6 +42,7 @@ function mapProvider(row: ProviderRow): LlmProvider {
     name: row.name,
     apiFormat: row.api_format,
     baseUrl: row.base_url,
+    catalogBaseUrl: row.catalog_base_url,
     enabled: row.enabled,
     hasApiKey: Boolean(row.encrypted_api_key),
     createdAt: row.created_at,
@@ -104,6 +106,7 @@ export async function createLlmProvider(
     name: string;
     apiFormat: LlmApiFormat;
     baseUrl: string | null;
+    catalogBaseUrl: string | null;
     encryptedApiKey: string | null;
     enabled: boolean;
   },
@@ -111,14 +114,15 @@ export async function createLlmProvider(
   const [row] = await queryRows<ProviderRow>(
     env,
     `
-    INSERT INTO llm_providers (name, api_format, base_url, encrypted_api_key, enabled, updated_at)
-    VALUES ($1, $2, $3, $4, $5, now())
+    INSERT INTO llm_providers (name, api_format, base_url, catalog_base_url, encrypted_api_key, enabled, updated_at)
+    VALUES ($1, $2, $3, $4, $5, $6, now())
     RETURNING ${PROVIDER_COLUMNS}
     `,
     [
       input.name,
       input.apiFormat,
       input.baseUrl,
+      input.catalogBaseUrl,
       input.encryptedApiKey,
       input.enabled,
     ],
@@ -145,6 +149,7 @@ export async function updateLlmProvider(
     name: string;
     apiFormat: LlmApiFormat;
     baseUrl: string | null;
+    catalogBaseUrl: string | null;
     encryptedApiKey?: string | null;
     enabled: boolean;
   },
@@ -154,7 +159,7 @@ export async function updateLlmProvider(
     input.name,
     input.apiFormat,
     input.baseUrl,
-    input.enabled,
+    input.catalogBaseUrl,
   ];
   let apiKeySql = "";
   if (input.encryptedApiKey !== undefined) {
@@ -170,8 +175,8 @@ export async function updateLlmProvider(
       name = $2,
       api_format = $3,
       base_url = $4,
-      enabled = $5,
-      updated_at = now()
+      catalog_base_url = $5,
+      enabled = $6,
       ${apiKeySql}
     WHERE id = $1
     RETURNING ${PROVIDER_COLUMNS}

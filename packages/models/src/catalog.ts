@@ -176,12 +176,49 @@ function extractGeminiModels(data: GeminiModelsResponse) {
 export async function listProviderModels(input: {
   apiFormat: LlmApiFormat;
   baseUrl: string | null;
+  catalogBaseUrl?: string | null;
   apiKey?: string;
   cloudflareAccountId?: string;
   cloudflareApiToken?: string;
 }) {
   // Same guard the review adapters apply, so provider sync can't be pointed at a private URL.
   assertPublicBaseUrl(input.baseUrl, input.apiFormat);
+
+  // Catalog override: some vendors serve chat through a dialect whose endpoint rejects
+  // GET /models (z.ai's Anthropic-compat surface 405s it) while a sibling base lists
+  // models fine. Both major dialects return { data: [{ id }] }, so one OpenAI-style
+  // parse covers either; auth headers are sent in both styles and servers ignore the
+  // one they don't know.
+  if (
+    input.catalogBaseUrl &&
+    (input.apiFormat === "openai" || input.apiFormat === "anthropic")
+  ) {
+    assertPublicBaseUrl(input.catalogBaseUrl, input.apiFormat);
+    if (!input.apiKey)
+      throw new Error("API key is required to list models.");
+    const apiKey = input.apiKey;
+    const catalogUrl = input.catalogBaseUrl.replace(/\/+$/, "");
+    const response = await withTimeout(
+      "Provider catalog model list",
+      MODEL_LIST_TIMEOUT_MS,
+      (signal) =>
+        fetch(`${catalogUrl}/models`, {
+          signal,
+          headers: {
+            authorization: `Bearer ${apiKey}`,
+            "x-api-key": apiKey,
+            "anthropic-version": "2023-06-01",
+          },
+        }),
+    );
+    if (!response.ok)
+      throw new Error(
+        `Provider catalog model list failed with ${response.status}: ${await limitedErrorBody(response)}`,
+      );
+    return extractOpenAiModels(
+      (await response.json()) as OpenAIModelsResponse,
+    );
+  }
 
   const baseUrl = (input.baseUrl || defaultBaseUrl(input.apiFormat)).replace(
     /\/+$/,

@@ -194,6 +194,7 @@ export function createSharedApiDeps(p: PlatformDeps): ApiRouterDeps {
               const modelNames = await listProviderModels({
                 apiFormat: provider.apiFormat,
                 baseUrl: provider.baseUrl,
+                catalogBaseUrl: provider.catalogBaseUrl,
                 apiKey,
                 cloudflareAccountId: optionalEnv(() => p.cfAccountId || ""),
                 cloudflareApiToken: optionalEnv(() => p.cfApiToken || ""),
@@ -366,6 +367,12 @@ export function createSharedApiDeps(p: PlatformDeps): ApiRouterDeps {
                 : input.baseUrl
                   ? input.baseUrl.replace(/\/+$/, "")
                   : null, // basic normalization
+            catalogBaseUrl:
+              input.apiFormat === "cloudflare-workers-ai"
+                ? null
+                : input.catalogBaseUrl
+                  ? input.catalogBaseUrl.replace(/\/+$/, "")
+                  : null,
             encryptedApiKey,
             enabled: input.enabled,
           });
@@ -423,6 +430,12 @@ export function createSharedApiDeps(p: PlatformDeps): ApiRouterDeps {
                 ? null
                 : input.baseUrl
                   ? input.baseUrl.replace(/\/+$/, "")
+                  : null,
+            catalogBaseUrl:
+              input.apiFormat === "cloudflare-workers-ai"
+                ? null
+                : input.catalogBaseUrl
+                  ? input.catalogBaseUrl.replace(/\/+$/, "")
                   : null,
             ...(encryptedApiKey !== undefined ? { encryptedApiKey } : {}),
             enabled: input.enabled,

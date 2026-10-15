@@ -15,6 +15,7 @@ const providerCreateSchema = z.strictObject({
   name: z.string().trim().min(1),
   apiFormat: apiFormatSchema,
   baseUrl: optionalUrlSchema,
+  catalogBaseUrl: optionalUrlSchema,
   apiKey: z.string().optional(),
   enabled: z.boolean().default(true),
 });

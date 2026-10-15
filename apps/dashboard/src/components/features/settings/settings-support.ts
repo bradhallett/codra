@@ -115,6 +115,7 @@ export type NewProviderDraft = {
   name: string;
   apiFormat: LlmApiFormat;
   baseUrl: string;
+  catalogBaseUrl: string;
   apiKey: string;
   enabled: boolean;
 };

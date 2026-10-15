@@ -422,6 +422,10 @@ export const llmProviderSchema = z.object({
   name: z.string(),
   apiFormat: z.enum(llmApiFormats),
   baseUrl: z.url().nullable(),
+  // Catalog discovery override: for providers whose chat endpoint dialect cannot
+  // serve GET /models (z.ai's Anthropic-compat surface 405s it) while a sibling
+  // base can. NULL = catalog follows the chat base URL, as before.
+  catalogBaseUrl: z.url().nullable().default(null),
   enabled: z.boolean(),
   hasApiKey: z.boolean(),
   createdAt: dateStringSchema,

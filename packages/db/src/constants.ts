@@ -19,7 +19,7 @@ export const SYSTEM_ACTIVE_JOBS_KEY = "system:active_jobs";
 
 // model-configs.ts
 export const PROVIDER_COLUMNS =
-  "id, name, api_format, base_url, encrypted_api_key, enabled, created_at, updated_at";
+  "id, name, api_format, base_url, catalog_base_url, encrypted_api_key, enabled, created_at, updated_at";
 export const MODEL_SELECT = `
   SELECT
     mc.model_id,

@@ -94,6 +94,26 @@ export function NewProviderForm({
           />
         </div>
         <div>
+          <FieldLabel htmlFor="new-provider-catalog-url">
+            Catalog Base URL (optional)
+          </FieldLabel>
+          <Input
+            id="new-provider-catalog-url"
+            placeholder="https://llm.example.com/v1"
+            value={newProvider.catalogBaseUrl}
+            onChange={(e) =>
+              setNewProvider((current) => ({
+                ...current,
+                catalogBaseUrl: e.target.value,
+              }))
+            }
+          />
+          <p className="mt-1.5 text-xs text-ui-subtle">
+            Where model discovery should list models, when that differs from
+            the base URL.
+          </p>
+        </div>
+        <div>
           <FieldLabel htmlFor="new-provider-api-key">
             {apiKeyFieldLabel(newProvider.apiFormat)}
           </FieldLabel>
