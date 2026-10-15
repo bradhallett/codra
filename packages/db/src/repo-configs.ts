@@ -105,7 +105,7 @@ export async function syncRepoConfig(
     env,
     `
       INSERT INTO repo_configs (repository_id, parsed_json, updated_at, main_model, fallback_models, size_overrides, enabled)
-      VALUES ($1, $2::text::jsonb, now(), NULL, NULL, NULL, TRUE)
+      VALUES ($1, $2::text::jsonb, now(), NULL, NULL, NULL, FALSE)
       ON CONFLICT (repository_id) DO NOTHING
     `,
     [repositoryId, JSON.stringify(defaultRepoConfig)],

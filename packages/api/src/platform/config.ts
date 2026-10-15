@@ -99,7 +99,8 @@ export async function loadRepoConfig(
   const existing = await getRepoConfigRecord(db, input.owner, input.repo);
 
   let parsedJson = existing?.parsedJson ?? defaultRepoConfig;
-  const enabled = existing?.enabled ?? true;
+  // Self-host hardening: unknown repos default to disabled; only dashboard-enabled repos are reviewed.
+  const enabled = existing?.enabled ?? false;
 
   if (!hasRepoModelOverride(existing)) {
     const globalModel = await getGlobalConfig(kv);
